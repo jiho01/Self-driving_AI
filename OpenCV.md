@@ -27,6 +27,18 @@ print(cv2.__version__)
 ```
 
 ---
+# 📦 자주 사용하는 라이브러리
+
+| 라이브러리 | 설명 | 설치 명령어 |
+|------------|------|--------------|
+| `opencv-python` | OpenCV의 핵심 기능 사용 (이미지/영상 처리 등) | `pip install opencv-python` |
+| `numpy` | 이미지의 배열/행렬 연산 처리 (OpenCV는 내부적으로 numpy 배열 사용) | `pip install numpy` |
+| `matplotlib` | 이미지 시각화에 사용 (선택사항) | `pip install matplotlib` |
+
+```bash
+# 전체 설치 예시
+pip install opencv-python numpy matplotlib
+```
 
 # 📚 기본 용어 정리
 
@@ -120,15 +132,4 @@ cv2.destroyAllWindows()
 > 💡 참고: OpenCV는 실시간 처리에 강하므로, 영상 기반 프로젝트에 적합합니다.
 ---
 
-# 📦 자주 사용하는 라이브러리
 
-| 라이브러리 | 설명 | 설치 명령어 |
-|------------|------|--------------|
-| `opencv-python` | OpenCV의 핵심 기능 사용 (이미지/영상 처리 등) | `pip install opencv-python` |
-| `numpy` | 이미지의 배열/행렬 연산 처리 (OpenCV는 내부적으로 numpy 배열 사용) | `pip install numpy` |
-| `matplotlib` | 이미지 시각화에 사용 (선택사항) | `pip install matplotlib` |
-
-```bash
-# 전체 설치 예시
-pip install opencv-python numpy matplotlib
-```
