@@ -1,5 +1,5 @@
 
-# 🧠 Convolutional Neural Network (CNN) 및 이미지 표시 방법
+# 🧠 Convolutional Neural Network (CNN) 및 이미지 처리·표시 방법
 
 CNN(Convolutional Neural Network)은 이미지나 영상 같은 시각 데이터를 처리하기 위해 설계된 딥러닝 모델입니다. 주로 **이미지 분류, 객체 인식, 자율주행, 얼굴 인식** 등에 사용됩니다.
 
@@ -133,4 +133,50 @@ cv2_imshow(img)
 ```
 
 ---
-📝 이 문서는 CNN의 기본 개념과 실제 코드 예제, 그리고 이미지를 화면에 표시하는 방법을 함께 담고 있습니다.
+
+## 🖌️ 이미지 필터 활용 예시
+
+아래는 수직 엣지 감지, 수평 엣지 감지, 블러 처리, 샤프닝 필터 적용 예시입니다.
+
+### 2. 수직 엣지 감지 (Vertical Edge Detection)
+```python
+# Sobel X를 이용한 수직 엣지 감지
+sobel_x = cv2.Sobel(img, cv2.CV_64F, 1, 0, ksize=3)
+plt.imshow(sobel_x, cmap='gray')
+plt.title('Vertical Edge (Sobel X)')
+plt.axis('off')
+plt.show()
+```
+
+### 3. 수평 엣지 감지 (Horizontal Edge Detection)
+```python
+# Sobel Y를 이용한 수평 엣지 감지
+sobel_y = cv2.Sobel(img, cv2.CV_64F, 0, 1, ksize=3)
+plt.imshow(sobel_y, cmap='gray')
+plt.title('Horizontal Edge (Sobel Y)')
+plt.axis('off')
+plt.show()
+```
+
+### 4. 블러 처리 (Blurring)
+```python
+# Gaussian Blur를 이용한 블러 처리
+blur = cv2.GaussianBlur(img, (5, 5), 0)
+plt.imshow(blur, cmap='gray')
+plt.title('Blurred Image')
+plt.axis('off')
+plt.show()
+```
+
+### 5. 샤프닝 (Sharpening)
+```python
+# 샤프닝 필터 커널 정의 및 적용
+kernel = np.array([[0, -1, 0],
+                   [-1, 5, -1],
+                   [0, -1, 0]])
+sharpened = cv2.filter2D(img, -1, kernel)
+plt.imshow(sharpened, cmap='gray')
+plt.title('Sharpened Image')
+plt.axis('off')
+plt.show()
+```
