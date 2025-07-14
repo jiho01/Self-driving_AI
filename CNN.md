@@ -1,106 +1,51 @@
-from pathlib import Path
+# ✏️CNN이란?
+## CNN(Convolutional Neural Network, 합성곱 신경망)
+- 딥러닝에서 주로 이미지나 영상 데이터를 처리할 때 사용되는 대표적인 신경망 구조입니다.
+- CNN은 인간의 시각 피질 구조를 모방해 개발되었으며, 이미지의 공간적, 지역적 정보를 효과적으로 학습할 수 있도록 설계되었습니다.
 
-# Markdown content as defined earlier
-markdown_content = """
-# 🧠 Convolutional Neural Network (CNN)
+<img width="705" height="287" alt="image" src="https://github.com/user-attachments/assets/a017bec9-5fcf-4a44-b0a6-a77571c1506e" />
 
-CNN(Convolutional Neural Network)은 이미지나 영상 같은 시각 데이터를 처리하기 위해 설계된 딥러닝 모델입니다. 주로 **이미지 분류, 객체 인식, 자율주행, 얼굴 인식** 등에 사용됩니다.
 
----
+### 등장 배경
+- 기존의 인공신경망(특히 다층 퍼셉트론, MLP)은 이미지를 1차원 벡터로 변환해 처리해야 했기 때문에, 이미지의 공간 구조와 지역적 정보가 손실되는 한계가 있었습니다.
+- CNN은 이러한 문제를 해결하기 위해 고안되었으며, 이미지의 2차원 구조를 그대로 입력받아 공간 정보를 보존하면서 학습할 수 있습니다.
 
-## 🔧 주요 구성 요소 및 용어 정리
+### 주요 구조와 동작 원리
+- **합성곱 계층**(Convolutional Layer): 입력 데이터에 여러 개의 필터(커널)를 적용해 **특징 맵**(feature map)을 생성합니다. 각 필터는 이미지의 특정 패턴(예: 모서리, 색상 변화 등)을 감지하도록 학습됩니다.
 
-### 1. Convolution Layer (합성곱 층)
-- 필터(커널)를 사용하여 입력 이미지에서 **특징(Feature)** 을 추출합니다.
-- 입력 이미지의 국소 영역에 필터를 곱하여 특징 맵(feature map)을 생성합니다.
-- 여러 개의 필터를 사용하면 다양한 특징을 학습할 수 있습니다.
+![img](https://github.com/user-attachments/assets/e481c078-c53a-4535-a3b9-a49c2095f3e1)
 
-```python
-# 예시 (PyTorch)
-nn.Conv2d(in_channels=3, out_channels=16, kernel_size=3, stride=1, padding=1)
-2. ReLU (Rectified Linear Unit)
-비선형 활성화 함수로, 모델에 비선형성을 부여합니다.
 
-음수는 0으로, 양수는 그대로 유지합니다.
+- **활성화 함수**(ReLU 등): 비선형성을 부여해 신경망이 복잡한 패턴을 학습할 수 있도록 합니다. 대표적으로 ReLU(Rectified Linear Unit)가 사용됩니다.
 
-python
-항상 세부 정보 표시
+<img width="822" height="362" alt="스크린샷 2025-07-14 09 26 07" src="https://github.com/user-attachments/assets/613ca701-82e5-406a-9d9e-54fef3ca71b9" />
 
-복사
-# 예시
-F.relu(x)
-3. Pooling Layer (풀링층)
-특징 맵의 크기를 줄여 연산량을 줄이고, 특징의 위치 변화에 대해 불변성을 제공합니다.
 
-종류: Max Pooling, Average Pooling 등
+- **풀링 계층**(Pooling Layer): 특징 맵의 크기를 줄이고, 중요한 정보만 추려내어 연산량을 감소시킵니다. 대표적으로 최대 풀링(max pooling)이 사용됩니다.
 
-python
-항상 세부 정보 표시
+<img width="1280" height="497" alt="다운로드" src="https://github.com/user-attachments/assets/f72ab12b-ee2a-43dc-8453-e00106c6e7e2" />
 
-복사
-# 예시 (Max Pooling)
-nn.MaxPool2d(kernel_size=2, stride=2)
-4. Fully Connected Layer (완전 연결층)
-마지막 단계에서 추출된 특징을 기반으로 분류(Classification) 를 수행합니다.
 
-일반적인 인공신경망(Dense Layer)와 동일한 구조입니다.
+- **완전 연결 계층**(Fully Connected Layer): 마지막에 위치하며, 추출된 특징을 바탕으로 최종 분류 작업을 수행합니다.
 
-python
-항상 세부 정보 표시
+### CNN의 전체적인 네트워크 구조
 
-복사
-# 예시
-nn.Linear(in_features=128, out_features=10)
-🔄 전체 흐름 예시
-scss
-항상 세부 정보 표시
+<img width="640" height="229" alt="image (1)" src="https://github.com/user-attachments/assets/93a051a6-8655-44d0-a6d4-9ff22e37f067" />
 
-복사
-입력 이미지
-   ↓
-[Convolution → ReLU → Pooling] × n
-   ↓
-Flatten (1차원으로 변환)
-   ↓
-Fully Connected Layer
-   ↓
-Softmax (출력 확률)
-   ↓
-클래스 예측 (예: 고양이 vs 강아지)
-🎯 CNN의 특징
-이미지의 2차원 구조를 그대로 유지하며 처리
 
-파라미터 수가 적고 계산 효율이 높음
+### 특징 및 장점
+- 공간 정보 보존: 이미지의 구조적, 지역적 정보를 유지하며 학습합니다.
+- 특징 자동 추출: 사람이 직접 특징을 설계하지 않아도, 네트워크가 학습 과정에서 자동으로 특징을 추출합니다.
+- 적은 파라미터: 필터(커널)를 공유함으로써 전체 파라미터 수가 줄어들고, 과적합 위험이 낮아집니다.
+- 컴퓨터 비전 분야에 최적화: 이미지 분류, 객체 인식, 얼굴 인식, 자율주행 등 다양한 비전 분야에서 뛰어난 성능을 보입니다.
 
-특징을 자동으로 추출함 (수작업 특징 설계 필요 없음)
 
-영상 처리, 의료 영상, 자율주행, 얼굴 인식 등에서 폭넓게 활용됨
+### 활용 예시
+- **이미지 분류**: 고양이/강아지 구분, 손글씨 숫자 인식(MNIST 등)
+- **객체 탐지 및 인식**: 자율주행차, CCTV 영상 분석
+- **의료 영상 분석**: X-ray, MRI 등에서 이상 부위 탐지
 
-📚 주요 활용 분야
-분야	예시
-이미지 분류	고양이 vs 강아지, 숫자 인식
-객체 탐지	자율주행 자동차, CCTV 분석
-얼굴 인식	Face ID, 감정 분석
-의료 영상	CT/MRI 이상 탐지
 
-🧪 실습 예시
-python
-항상 세부 정보 표시
-
-복사
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-
-class SimpleCNN(nn.Module):
-    def __init__(self):
-        super(SimpleCNN, self).__init__()
-        self.conv1 = nn.Conv2d(1, 16, 3, padding=1)
-        self.pool = nn.MaxPool2d(2, 2)
-        self.fc1 = nn.Linear(16 * 14 * 14, 10)  # MNIST용
-
-    def forward(self, x):
-        x = self.pool(F.relu(self.conv1(x)))
-        x = x.view(-1, 16 * 14 * 14)
-        x = self.fc1(x)
-        return x
+### 한계점 및 최근 동향
+- **로컬 특징에 강점**: CNN은 인접한 픽셀 간의 상관관계(로컬 특징)는 잘 추출하지만, 전체 이미지를 아우르는 글로벌 특징 추출에는 한계가 있습니다.
+- 최근에는 **트랜스포머(Transformer) 구조**와의 결합 등 다양한 하이브리드 모델이 연구되고 있습니다.
