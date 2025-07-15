@@ -1,0 +1,281 @@
+### Row / Column
+
+---
+
+- **Row 위젯**
+    - 자식들을 가록 방향(왼쪽 → 오른쪽)으로 나열
+    - `mainAxis`는  수평 방향
+    - `crossAxis` 는 수직 방향
+        
+        ```dart
+        Row(
+          children: [
+            Icon(Icons.star),
+            Text('Row Example'),
+          ],
+        )
+        ```
+        
+- **Column 위젯**
+    - 자식들을 세로 방향(위 → 아래)으로 나열
+    - `mainAxis`는  수평 방향
+    - `crossAxis` 는 수직 방향
+    
+    ```dart
+    Column(
+      children: [
+        Icon(Icons.star),
+        Text('Column Example'),
+      ],
+    )
+    ```
+    
+
+<aside>
+💡
+
+`MainAxisAlignment.spaceBetween` : 생략가능하지만 균등한 간격 배분한 레이아웃 생성  
+
+</aside>
+
+### child / children
+
+- child : 단일 위젯만 포함
+    1. Container : 박스처럼 외부 마진, 내부 패딩, 색상, 테두리, 크기 등을 지정할 수 있는 만능 래퍼
+    2. Center : 자식을 **가운데 정렬**해주는 위젯
+    3. Padding : 자식 주위에 **여백(패딩)** 을 줄 수 있는 위젯```
+    4. Expanded : `Row`/`Column` 내에서 자식에게 **남은 공간을 비율로 배분**해주는 위젯
+
+```dart
+Container(
+  padding: EdgeInsets.all(16),
+  color: Colors.blue,
+  child: Text('Hello'),
+)
+```
+
+- children : 여러 위젯을 배치하는 컨테이너
+    1. Row : 자식들을 가로로 나열
+    2. Column : 자식들을 세로로 나열
+    3. ListView : 스크롤 가능한 리스트 형태로 자식들을 나열
+    4. Statck : 자식들을 겹쳐서 배치
+    
+
+```dart
+Row(
+  children: [
+    Icon(Icons.star),
+    Text('별'),
+  ],
+)
+```
+
+### StatelessWidget / StatefulWidget
+
+- StatelessWidget
+    - 화면에 표시되는 동안 한 번 만들어지면 **변하지 않아**.
+    - 예시: 아이콘, 텍스트, 로고 같은 단순 UI 요소
+    
+    ```dart
+    class MyText extends StatelessWidget {
+      @override
+      Widget build(BuildContext context) {
+        return Text('Hello, Flutter!');
+      }
+    }
+    ```
+    
+- StatefulWidget
+    - **"상태(state)"가 있는 위젯**이야.
+    - 버튼 클릭, 입력, 애니메이션 등 **화면이 바뀔 수 있는** UI에 사용해.
+    - 위젯이 바뀌면(예: setState 호출) **다시 build**됨.
+    
+    ```dart
+    class MyCounter extends StatefulWidget {
+      @override
+      State<MyCounter> createState() => _MyCounterState();
+    }
+    
+    class _MyCounterState extends State<MyCounter> {
+      int _count = 0;
+    
+      @override
+      Widget build(BuildContext context) {
+    ```
+    
+
+### `TextField()`
+
+- 텍스트(문자)를 입력받는 기본 위젯
+
+| 속성 | 설명 |
+| --- | --- |
+| `controller` | 입력된 텍스트를 읽거나 조작할 때 |
+| `decoration` | 힌트, 라벨, 테두리 등 꾸미기 |
+| `keyboardType` | 입력 키보드 타입(숫자, 이메일 등) |
+| `maxLines` | 입력 줄 개수(여러 줄 입력) |
+| `obscureText` | 비밀번호 입력 시 *로 표시 |
+| `onChanged` | 값이 바뀔 때마다 호출되는 콜백 |
+
+```dart
+TextField(
+  controller: myController,
+  decoration: InputDecoration(
+    labelText: '이름을 입력하세요',
+    border: OutlineInputBorder(),
+    hintText: '홍길동',
+  ),
+  keyboardType: TextInputType.text,
+  maxLines: 1,
+  onChanged: (value) {
+    print('입력 값: $value');
+  },
+)
+```
+
+### Radio
+
+- 라디오 버튼(한 번에 하나만 선택 가능, 그룹 중 선택)
+
+| 속성 | 설명 |
+| --- | --- |
+| value | 이 Radio가 의미하는 값 (보통 int, String 등) |
+| groupValue | 선택된 값 (모든 Radio가 이 값과 비교해서 선택여부 결정) |
+| onChanged | 눌렸을 때 실행할 함수 (값 바꿀 때 setState로 갱신) |
+
+```dart
+int? _radioValue = 0; // 상태변수(몇 번이 선택됐는지)
+
+Row(
+  children: [
+    Radio(
+      value: 0,
+      groupValue: _radioValue,
+      onChanged: (int? value) {
+        setState(() {
+          _radioValue = value;
+        });
+      },
+    ),
+    Text('Apple'),
+    Radio(
+      value: 1,
+      groupValue: _radioValue,
+      onChanged: (int? value) {
+        setState(() {
+          _radioValue = value;
+        });
+      },
+    ),
+    Text('Banana'),
+    Radio(
+      value: 2,
+      groupValue: _radioValue,
+      onChanged: (int? value) {
+        setState(() {
+          _radioValue = value;
+        });
+      },
+    ),
+    Text('Cherry'),
+  ],
+)
+
+```
+
+### GestureDetector
+
+화면의 **아무 위젯이나** 터치, 클릭, 스와이프, 드래그 등 다양한 **제스처(동작)**를 감지하고 싶을 때
+
+| 속성 | 동작(설명) |
+| --- | --- |
+| `onTap` | 탭(한 번 클릭) |
+| `onDoubleTap` | 더블탭(두 번 클릭) |
+| `onLongPress` | 길게 누름 |
+| `onPanUpdate` | 드래그(움직임) |
+| `onHorizontalDragStart` | 가로 드래그 시작 |
+| `onVerticalDragEnd` | 세로 드래그 끝 |
+| `onScaleUpdate` | 핀치(줌인/줌아웃) |
+
+```dart
+GestureDetector(
+  onTap: () {
+    print('터치됨!');
+  },
+  child: Container(
+    width: 100,
+    height: 100,
+    color: Colors.blue,
+  ),
+)
+
+```
+
+### actions
+
+1. **AppBar의 actions**
+
+- **AppBar 우측에 여러 개의 아이콘, 버튼 등을 나열할 때** 쓰는 리스트
+- 오른쪽에 “아이콘버튼”, “메뉴” 등을 쉽게 넣을 수 있음
+
+```dart
+appBar: AppBar(
+  title: Text('예시'),
+  actions: [
+    IconButton(
+      icon: Icon(Icons.search),
+      onPressed: () {},
+    ),
+    IconButton(
+      icon: Icon(Icons.settings),
+      onPressed: () {},
+    ),
+  ],
+),
+
+```
+
+2. **AlertDialog의 actions**
+
+- 다이얼로그 하단에 “확인”, “취소” 버튼 같은 것들을 넣을 때 사용
+- **버튼(위젯)들의 리스트**를 전달
+
+```dart
+AlertDialog(
+  title: Text('동물 추가'),
+  content: Text('이 동물을 추가할까요?'),
+  actions: [
+    ElevatedButton(
+      onPressed: () { /* 예: 동물 추가 */ },
+      child: Text('YES'),
+    ),
+    ElevatedButton(
+      onPressed: () { Navigator.of(context).pop(); },
+      child: Text('NO'),
+    ),
+  ],
+)
+
+```
+
+### `Align`
+
+- `Align`은 Flutter에서 **자식 위젯(예: `Text`, `Image`, `Container` 등)의 위치를 정할 수 있게 해주는 위젯**
+
+```dart
+Align(
+  alignment: Alignment.centerRight,
+  child: Text('오른쪽 정렬된 텍스트'),
+)
+
+```
+
+| 속성 | 위치 설명 |
+| --- | --- |
+| `Alignment.center` | 가운데 정렬 |
+| `Alignment.topLeft` | 왼쪽 위 |
+| `Alignment.topRight` | 오른쪽 위 |
+| `Alignment.bottomLeft` | 왼쪽 아래 |
+| `Alignment.bottomRight` | 오른쪽 아래 |
+| `Alignment.centerLeft` | 가운데 왼쪽 |
+| `Alignment.centerRight` | 가운데 오른쪽 |
